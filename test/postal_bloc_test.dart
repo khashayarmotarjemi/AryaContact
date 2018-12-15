@@ -1,21 +1,25 @@
 import 'package:latlong/latlong.dart';
-import 'package:maps_test/contact/contact_bloc.dart';
+import 'package:maps_test/postal/postal_bloc.dart';
 import 'package:maps_test/postal/postal_data.dart';
-import 'package:test_api/test_api.dart';
+import 'package:maps_test/postal/postal_repository.dart';
 import 'package:mockito/mockito.dart';
+import 'package:test_api/test_api.dart';
 
-class MockContactRepo extends Mock implements ContactRepository{}
-
+class MockPostalRepo extends Mock implements PostalRepository {}
 
 void main() {
-  group('contact bloc', () {
-    var mockRepo = new MockContactRepo();
-    when(mockRepo.getContactData(new PostalData("12"))).thenAnswer((_) => Future.value(ContactData("23322")));
+  group('postal bloc', () {
+    MockPostalRepo mockRepo = new MockPostalRepo();
+    when(mockRepo.getPostalData(new LatLng(12,12)))
+        .thenAnswer((_) => Future.value(PostalData("1111")));
 
-    ContactBloc bloc = new ContactBloc(mockRepo);
-    mockRepo.getContactData(new PostalData("12")).then((data) => print(data.contactCode));
+    PostalBloc bloc = new PostalBloc(mockRepo);
+
+    test("simple postal get test", () {
+      bloc.setLocation.add(LatLng(12, 12));
+      bloc.postalData.listen((postal) {
+        expect(postal.postalCode, "1111");
+      });
+    });
   });
-  /*test("viewPoint test", () {
-
-    });*/
 }
