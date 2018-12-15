@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:latlong/latlong.dart';
+import 'package:maps_test/postal/postal_data.dart';
+import 'package:maps_test/postal/postal_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PostalBloc {
@@ -36,12 +38,3 @@ class PostalBloc {
   }
 }
 
-class PostalData {
-  final String postalCode;
-
-  PostalData(this.postalCode);
-}
-
-abstract class PostalRepository {
-  Future<PostalData> getPostalData(LatLng location);
-}

@@ -8,8 +8,6 @@ void main() {
   group('map bloc', () {
     MapBloc bloc = new MapBloc(LatLng(25, 35));
 
-    PostalBloc bloc2 = new PostalBloc()
-
     test("viewPoint test", () {
       bloc.setViewPoint.add(new LatLng(25, 20));
       bloc.setViewPoint.add(new LatLng(13, 2));
