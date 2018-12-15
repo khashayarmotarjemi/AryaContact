@@ -10,12 +10,10 @@ import 'package:maps_test/map/map_provider.dart';
 import 'package:maps_test/map/map_view.dart';
 
 void main() {
-  runApp(MapBlocProvider(
+  runApp((
     bloc: new MapBloc(LatLng(36.683, 48.50)),
     child: MyApp(),
   ));
-
-
 }
 
 class MyApp extends StatelessWidget {

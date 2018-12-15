@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:maps_test/contact/contact_data.dart';
+import 'package:maps_test/contact/contact_repository.dart';
 import 'package:maps_test/postal/postal_data.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -37,12 +39,6 @@ class ContactBloc {
   }
 }
 
-class ContactData {
-  final String phoneNumber;
 
-  ContactData(this.phoneNumber);
-}
 
-abstract class ContactRepository {
-  Future<ContactData> getContactData(PostalData postal);
-}
+
