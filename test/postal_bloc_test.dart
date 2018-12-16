@@ -1,7 +1,7 @@
 import 'package:latlong/latlong.dart';
-import 'package:maps_test/postal/postal_bloc.dart';
-import 'package:maps_test/postal/postal_data.dart';
-import 'package:maps_test/postal/postal_repository.dart';
+import 'package:arya_contact/postal/postal_bloc.dart';
+import 'package:arya_contact/postal/postal_data.dart';
+import 'package:arya_contact/postal/postal_repository.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test_api/test_api.dart';
 

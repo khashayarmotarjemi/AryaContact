@@ -1,7 +1,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:maps_test/map/map_bloc.dart';
+import 'package:arya_contact/map/map_bloc.dart';
 
 class MapBlocProvider extends StatefulWidget {
   final Widget child;

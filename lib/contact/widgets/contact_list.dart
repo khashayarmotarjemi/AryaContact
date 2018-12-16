@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maps_test/common/loading.dart';
-import 'package:maps_test/contact/contact_bloc_provider.dart';
-import 'package:maps_test/contact/contact_data.dart';
-import 'package:maps_test/contact/widgets/contact_item.dart';
+import 'package:arya_contact/common/loading.dart';
+import 'package:arya_contact/contact/contact_bloc_provider.dart';
+import 'package:arya_contact/contact/contact_data.dart';
+import 'package:arya_contact/contact/widgets/contact_item.dart';
 
 class ContactList extends StatelessWidget {
   ContactList({Key key}) : super(key: key);

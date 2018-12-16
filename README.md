@@ -1,4 +1,4 @@
-# maps_test
+# arya_contact
 
 A new Flutter application.
 

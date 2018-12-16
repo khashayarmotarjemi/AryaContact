@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:maps_test/contact/contact_data.dart';
+import 'package:arya_contact/contact/contact_data.dart';
 
 class ContactItem extends StatelessWidget {
   final GestureTapCallback onTap;

@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
-import 'package:maps_test/map/map_bloc.dart';
-import 'package:maps_test/map/map_provider.dart';
-import 'package:maps_test/postal/postal_bloc.dart';
+import 'package:arya_contact/map/map_bloc.dart';
+import 'package:arya_contact/map/map_provider.dart';
+import 'package:arya_contact/postal/postal_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MapView extends StatelessWidget {

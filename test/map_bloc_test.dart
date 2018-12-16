@@ -1,7 +1,7 @@
 import 'package:latlong/latlong.dart';
-import 'package:maps_test/map/map_bloc.dart';
-import 'package:maps_test/map/map_view.dart';
-import 'package:maps_test/postal/postal_bloc.dart';
+import 'package:arya_contact/map/map_bloc.dart';
+import 'package:arya_contact/map/map_view.dart';
+import 'package:arya_contact/postal/postal_bloc.dart';
 import 'package:test_api/test_api.dart';
 
 void main() {

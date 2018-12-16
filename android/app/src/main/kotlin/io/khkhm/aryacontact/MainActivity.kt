@@ -1,4 +1,4 @@
-package io.khkhm.mapstest
+package io.khkhm.aryacontact
 
 import android.os.Bundle
 

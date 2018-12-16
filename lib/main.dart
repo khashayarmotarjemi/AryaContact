@@ -1,17 +1,37 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
+import 'package:arya_contact/map/map_bloc.dart';
+import 'package:arya_contact/map/map_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
+import 'package:arya_contact/contact/contact_bloc.dart';
+import 'package:arya_contact/contact/contact_bloc_provider.dart';
+import 'package:arya_contact/contact/contact_data.dart';
+import 'package:arya_contact/contact/contact_repository.dart';
+import 'package:arya_contact/map/map_view.dart';
+import 'package:arya_contact/postal/postal_data.dart';
 import 'package:latlong/latlong.dart';
-import 'package:maps_test/domain/map_interactor.dart';
-import 'package:maps_test/map/map_bloc.dart';
-import 'package:maps_test/map/map_provider.dart';
-import 'package:maps_test/map/map_view.dart';
+import 'package:mockito/mockito.dart';
+
+class MockContactRepo extends Mock implements ContactRepository {}
 
 void main() {
-  runApp((
-    bloc: new MapBloc(LatLng(36.683, 48.50)),
+  /*MockContactRepo mockRepo = new MockContactRepo();
+  when(mockRepo.getContactData(new PostalData("12")))
+      .thenAnswer((_) => Future.value(ContactData([
+            new Contact("1111", "aaaaaaaaa"),
+            new Contact("2222", "bbbbbbbbb"),
+            new Contact("3333", "ccccccccc"),
+            new Contact("4444", "ddddddddd")
+          ])));
+  var bloc = new ContactBloc(mockRepo);
+
+  bloc.setPostal.add(new PostalData("12"));*/
+
+
+  var bloc = new MapBloc(new LatLng(36.683,48.50));
+
+  runApp(MapBlocProvider(
+    bloc: bloc,
     child: MyApp(),
   ));
 }
@@ -25,7 +45,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MapView(),
+      home: new Scaffold(body: MapView(),
+      ),
     );
   }
 }
@@ -83,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 */
 /*urlTemplate:
                 "https://map.ir/shiveh/shiveh?service=WMS&version=1.1.1&request=GetMap&layers=Shiveh%3AShiveh&srs=EPSG%3A3857&bbox={x}%{y}%{z}%2C4265797.674539116&width=256&height=256&format=image%2Fpng",
-*//*
+*/ /*
 
                 urlTemplate: "https://api.tiles.mapbox.com/v4/"
                     "{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",

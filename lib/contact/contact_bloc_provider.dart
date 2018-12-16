@@ -1,7 +1,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:maps_test/contact/contact_bloc.dart';
+import 'package:arya_contact/contact/contact_bloc.dart';
 
 class ContactBlocProvider extends StatefulWidget {
   final Widget child;
