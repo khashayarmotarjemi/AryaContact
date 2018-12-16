@@ -10,7 +10,7 @@ class ContactList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<ContactData>(
-      stream: ContactBlocProvider.of(context).contactData,
+      stream: ContactsBlocProvider.of(context).contactData,
       builder: (context, snapshot) => snapshot.hasData
           ? _buildList(snapshot.data.contacts)
           : LoadingSpinner(),

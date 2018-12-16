@@ -3,15 +3,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:arya_contact/contact/contact_bloc.dart';
 
-class ContactBlocProvider extends StatefulWidget {
+class ContactsBlocProvider extends StatefulWidget {
   final Widget child;
   final ContactBloc bloc;
 
-  ContactBlocProvider({Key key, @required this.child, @required this.bloc})
+  ContactsBlocProvider({Key key, @required this.child, @required this.bloc})
       : super(key: key);
 
   @override
-  _ContactBlocProviderState createState() => _ContactBlocProviderState();
+  _ContactsBlocProviderState createState() => _ContactsBlocProviderState();
 
   static ContactBloc of(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(_ContactBlocProvider)
@@ -20,7 +20,7 @@ class ContactBlocProvider extends StatefulWidget {
   }
 }
 
-class _ContactBlocProviderState extends State<ContactBlocProvider> {
+class _ContactsBlocProviderState extends State<ContactsBlocProvider> {
   @override
   Widget build(BuildContext context) {
     return _ContactBlocProvider(bloc: widget.bloc, child: widget.child);
