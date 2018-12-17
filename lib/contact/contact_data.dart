@@ -4,6 +4,18 @@ class ContactData {
   final List<Contact> contacts;
 
   ContactData(this.contacts);
+
+  @override
+  bool operator ==(other) {
+    return other is ContactData && this.contacts == other.contacts;
+  }
+
+  @override
+  int get hashCode {
+    return hash2(contacts, 1);
+  }
+
+
 }
 
 class Contact {

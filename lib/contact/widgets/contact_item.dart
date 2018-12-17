@@ -1,6 +1,6 @@
+import 'package:arya_contact/contact/contact_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:arya_contact/contact/contact_data.dart';
 
 class ContactItem extends StatelessWidget {
   final GestureTapCallback onTap;
@@ -13,12 +13,18 @@ class ContactItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      leading: Text(contact.name),
-      title: Text(
-        contact.phoneNumber,
-        style: Theme.of(context).textTheme.title,
+    return new Container(
+      height: 100,
+      child: new Card(
+        elevation: 4,
+        child: ListTile(
+          onTap: onTap,
+          /* leading: Text(contact.name),
+        title: Text(
+          contact.phoneNumber,
+          style: Theme.of(context).textTheme.title,
+        ),*/
+        ),
       ),
     );
   }

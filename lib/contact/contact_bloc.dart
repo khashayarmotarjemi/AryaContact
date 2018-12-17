@@ -15,15 +15,16 @@ class ContactBloc {
   final List<StreamSubscription<dynamic>> _subscriptions;
 
   factory ContactBloc(ContactRepository repository) {
-    final contactDataController =
-        BehaviorSubject<ContactData>(sync: true, seedValue: null);
+    final contactDataController = BehaviorSubject<ContactData>(
+        sync: true, seedValue: new ContactData([]));
 
     final setPostalController = StreamController<PostalData>(sync: true);
 
     final subscriptions = <StreamSubscription<dynamic>>[
       setPostalController.stream.listen((postalData) {
-        Observable.fromFuture(repository.getContactData(postalData))
-            .pipe(contactDataController);
+        repository
+            .getContactData(postalData)
+            .then(contactDataController.sink.add);
       })
     ];
 
@@ -38,7 +39,3 @@ class ContactBloc {
     _subscriptions.clear();
   }
 }
-
-
-
-

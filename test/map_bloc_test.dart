@@ -37,7 +37,7 @@ void main() {
     });
 
     test("Merged map data test", () {
-      MapView.mergeMapData( bloc.markerLocation, bloc.clickable)
+      MapView.mergeMapData(bloc)
           .listen((data) {
         print(data.clickable);
       });

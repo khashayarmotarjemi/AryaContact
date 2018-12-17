@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:arya_contact/contact/contact_bloc_provider.dart';
 import 'package:arya_contact/map/map_bloc.dart';
 import 'package:arya_contact/map/map_provider.dart';
+import 'package:arya_contact/postal/postal_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -16,7 +18,7 @@ class MapView extends StatelessWidget {
     MapBloc bloc = MapBlocProvider.of(context);
 
     return StreamBuilder<MergedMapData>(
-        stream: mergeMapData(bloc.markerLocation, bloc.clickable),
+        stream: mergeMapData(bloc),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Stack(children: <Widget>[
@@ -25,8 +27,7 @@ class MapView extends StatelessWidget {
                   onPositionChanged: (mapPosition) {
                     bloc.setViewPoint.add(mapPosition.center);
                   },
-                  onTap: (latlng) {},
-                  center: new LatLng(36.6830, 48.5087),
+                  center: snapshot.data.viewPoint,
                   zoom: 12.0,
                 ),
                 layers: [
@@ -40,18 +41,18 @@ class MapView extends StatelessWidget {
                       'id': 'mapbox.streets',
                     },
                   ),
-                  new MarkerLayerOptions(markers: [
+                  /*new MarkerLayerOptions(markers: [
                     new Marker(
                         point: snapshot.data.marker,
                         builder: (context) => Icon(
                               Icons.place,
                               size: 78,
                             ))
-                  ])
+                  ])*/
                 ],
               ),
               !snapshot.data.clickable
-                  ? new Container(color: Color.fromARGB(200, 255, 240, 240))
+                  ? new Container(color: Color.fromARGB(0, 255, 240, 240))
                   : Container(),
               snapshot.data.clickable
                   ? StreamBuilder<bool>(
@@ -59,15 +60,32 @@ class MapView extends StatelessWidget {
                       builder: (context, showCenterPointerSnapshot) {
                         if (showCenterPointerSnapshot.hasData) {
                           return showCenterPointerSnapshot.data
-                              ? new Container(
-                                  alignment: Alignment.center,
-                                  child: IconButton(
-                                      icon: Icon(Icons.place),
-                                      iconSize: 78,
-                                      onPressed: () {
-                                        bloc.viewPoint.first.then((latLng) =>
-                                            bloc.setMarker.add(latLng));
-                                      }),
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    new Card(
+                                      child: Text("اینجا"),
+                                    ),
+                                    new Container(
+                                      alignment: Alignment.center,
+                                      child: IconButton(
+                                          icon: Icon(
+                                            Icons.place,
+                                            color: Colors.red,
+                                          ),
+                                          iconSize: 78,
+                                          onPressed: () {
+                                            bloc.viewPoint.first.then((latLng) {
+                                              bloc.setMarker.add(latLng);
+                                              bloc.setShowCenterPointer
+                                                  .add(false);
+                                              ContactsBlocProvider.of(context)
+                                                  .setPostal
+                                                  .add(PostalData("12"));
+                                            });
+                                          }),
+                                    ),
+                                  ],
                                 )
                               : Container();
                         } else {
@@ -83,20 +101,20 @@ class MapView extends StatelessWidget {
         });
   }
 
-  void _setViewpoint(LatLng viewPoint, BuildContext context) {
-    MapBlocProvider.of(context).setViewPoint.add(viewPoint);
-  }
-
-  static Stream<MergedMapData> mergeMapData(
-      Stream<LatLng> markerLocation, Stream<bool> clickable) {
-    return Observable.combineLatest2(markerLocation, clickable,
-        (markerLoc, clickable) => new MergedMapData(markerLoc, clickable));
+  static Stream<MergedMapData> mergeMapData(MapBloc bloc) {
+    return Observable.combineLatest3(
+        bloc.markerLocation,
+        bloc.clickable,
+        bloc.viewPoint,
+        (markerLoc, clickable, viewPoint) =>
+            new MergedMapData(markerLoc, clickable, viewPoint));
   }
 }
 
 class MergedMapData {
   final LatLng marker;
   final bool clickable;
+  final LatLng viewPoint;
 
-  MergedMapData(this.marker, this.clickable);
+  MergedMapData(this.marker, this.clickable, this.viewPoint);
 }

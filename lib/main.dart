@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:arya_contact/contact/contact_bloc.dart';
 import 'package:arya_contact/contact/contact_bloc_provider.dart';
 import 'package:arya_contact/contact/contact_data.dart';
@@ -14,16 +16,32 @@ class MockContactRepo extends Mock implements ContactRepository {}
 
 void main() {
   MockContactRepo mockRepo = new MockContactRepo();
-  when(mockRepo.getContactData(new PostalData("12")))
-      .thenAnswer((_) => Future.value(ContactData([
-            new Contact("1111", "aaaaaaaaa"),
-            new Contact("2222", "bbbbbbbbb"),
-            new Contact("3333", "ccccccccc"),
-            new Contact("4444", "ddddddddd")
-          ])));
+  when(mockRepo.getContactData(new PostalData("12"))).thenAnswer((_) {
+    return Future.delayed(
+        Duration(seconds: 3),
+        () => Future.value(ContactData([
+              new Contact("1111", "aaaaaaaaa"),
+              new Contact("2222", "bbbbbbbbb"),
+              new Contact("3333", "ccccccccc"),
+              new Contact("3333", "ccccccccc"),
+              new Contact("3333", "ccccccccc"),
+              new Contact("3333", "ccccccccc"),
+              new Contact("3333", "ccccccccc"),
+              new Contact("4444", "ddddddddd")
+            ])));
+  });
+
+
+  when(mockRepo.getContactData(new PostalData("0"))).thenAnswer((_) {
+    return Future.value(new ContactData([]));
+  });
+
+
   var bloc = new ContactBloc(mockRepo);
 
-  bloc.setPostal.add(new PostalData("12"));
+  bloc.contactData.listen((contactdata) {
+    print(contactdata.contacts);
+  });
 
   var mapBloc = new MapBloc(new LatLng(36.683, 48.50));
   var contactsBloc = new ContactBloc(mockRepo);
@@ -41,7 +59,7 @@ void main() {
             accentColor: Colors.redAccent,
 
             // Define the default Font Family
-            fontFamily: 'Montserrat',
+            fontFamily: 'Shabnam',
 
             // Define the default TextTheme. Use this to specify the default
             // text styling for headlines, titles, bodies of text, and more.
@@ -52,7 +70,7 @@ void main() {
             ),
           ),
           routes: {
-            '/' : (context) => HomeScreen(),
+            '/': (context) => HomeScreen(),
           }),
     ),
   ));
