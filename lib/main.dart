@@ -8,6 +8,7 @@ import 'package:arya_contact/map/map_bloc.dart';
 import 'package:arya_contact/map/map_provider.dart';
 import 'package:arya_contact/postal/postal_data.dart';
 import 'package:arya_contact/screens/home_screen.dart';
+import 'package:arya_contact/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong/latlong.dart';
 import 'package:mockito/mockito.dart';
@@ -20,22 +21,20 @@ void main() {
     return Future.delayed(
         Duration(seconds: 3),
         () => Future.value(ContactData([
-              new Contact("1111", "aaaaaaaaa"),
-              new Contact("2222", "bbbbbbbbb"),
-              new Contact("3333", "ccccccccc"),
-              new Contact("3333", "ccccccccc"),
-              new Contact("3333", "ccccccccc"),
-              new Contact("3333", "ccccccccc"),
-              new Contact("3333", "ccccccccc"),
-              new Contact("4444", "ddddddddd")
+              new Contact("+24 3345 8561", "فروشگاه اول"),
+              new Contact("+24 3345 8561", "فروشگاه اول"),
+              new Contact("+24 3345 8561", "فروشگاه اول"),
+              new Contact("+24 3345 8561", "فروشگاه اول"),
+              new Contact("+24 3345 8561", "فروشگاه اول"),
+              new Contact("+24 3345 8561", "فروشگاه اول"),
+              new Contact("+24 3345 8561", "فروشگاه اول"),
+              new Contact("+24 3345 8561", "فروشگاه اول")
             ])));
   });
-
 
   when(mockRepo.getContactData(new PostalData("0"))).thenAnswer((_) {
     return Future.value(new ContactData([]));
   });
-
 
   var bloc = new ContactBloc(mockRepo);
 
@@ -70,7 +69,8 @@ void main() {
             ),
           ),
           routes: {
-            '/': (context) => HomeScreen(),
+            '/': (context) => LoginScreen(),
+            '/map': (context) => HomeScreen()
           }),
     ),
   ));

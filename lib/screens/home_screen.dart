@@ -59,7 +59,7 @@ class HomeScreenState extends State<HomeScreen> {
                 setUp(mapSnapshot, contactSnapshot, mapBloc, contactsBloc);
                 return Scaffold(
                   appBar: AppBar(
-                    title: Text("Contact"),
+                    title: Text("نقشه"),
                   ),
                   body: Stack(
                     children: <Widget>[
@@ -86,48 +86,62 @@ class HomeScreenState extends State<HomeScreen> {
                           : Container(),
                       mapSnapshot.hasData &&
                               contactSnapshot.data.contacts.isNotEmpty
-                          ? new Container(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                padding: EdgeInsets.only(left: 50, right: 50),
-                                height:59,
-                                child: FlatButton(
-                                    onPressed: () {
-                                      resetBlocs(mapBloc, contactsBloc);
-                                    },
-                                    child: Card(
-                                      elevation: 6,
-                                      color: Colors.red[400],
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(0)
-                                      ),
-                                      child: new Container(
-                                        height: 59,
-                                        width: 200,
-                                        alignment: Alignment.center,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text(
-                                              "تغییر محل",
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  color: Colors.white),
+                          ? Stack(
+                              children: <Widget>[
+                                new Container(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 56,
+                                    color: Colors.grey[800],
+                                  ),
+                                ),
+                                new Container(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    padding:
+                                        EdgeInsets.only(left: 50, right: 50),
+                                    height: 59,
+                                    child: FlatButton(
+                                        onPressed: () {
+                                          resetBlocs(mapBloc, contactsBloc);
+                                        },
+                                        child: Card(
+                                          elevation: 6,
+                                          color: Colors.red[400],
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(0)),
+                                          child: new Container(
+                                            height: 59,
+                                            width: 200,
+                                            alignment: Alignment.center,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text(
+                                                  "تغییر محل",
+                                                  style: TextStyle(
+                                                      fontSize: 17,
+                                                      color: Colors.white),
+                                                ),
+                                                Container(
+                                                  padding:
+                                                      EdgeInsets.only(left: 8),
+                                                  child: Icon(
+                                                    Icons.clear,
+                                                    size: 24,
+                                                    color: Colors.white,
+                                                  ),
+                                                )
+                                              ],
                                             ),
-                                            Container(
-                                              padding: EdgeInsets.only(left: 8),
-                                              child: Icon(
-                                                Icons.clear,
-                                                size: 24,
-                                                color: Colors.white,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    )),
-                              ),
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                              ],
                             )
                           : new Container(),
                     ],

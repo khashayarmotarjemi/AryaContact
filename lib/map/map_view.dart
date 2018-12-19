@@ -12,10 +12,15 @@ import 'package:rxdart/rxdart.dart';
 
 class MapView extends StatelessWidget {
   MapView({Key key}) : super(key: key);
+  bool showHelp = true;
 
   @override
   Widget build(BuildContext context) {
     MapBloc bloc = MapBlocProvider.of(context);
+
+    Timer(Duration(seconds: 4), () {
+      showHelp = false;
+    });
 
     return StreamBuilder<MergedMapData>(
         stream: mergeMapData(bloc),
@@ -24,6 +29,7 @@ class MapView extends StatelessWidget {
             return Stack(children: <Widget>[
               new FlutterMap(
                 options: new MapOptions(
+                  onTap: (latlng) {},
                   onPositionChanged: (mapPosition) {
                     bloc.setViewPoint.add(mapPosition.center);
                   },
@@ -63,8 +69,16 @@ class MapView extends StatelessWidget {
                               ? Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    new Card(
-                                      child: Text("اینجا"),
+                                    Container(
+                                      width: 70,
+                                      height: 35,
+                                      child: new Card(
+                                        color: Colors.red,
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          child: Text("اینجا",style: TextStyle(color: Colors.white),),
+                                        ),
+                                      ),
                                     ),
                                     new Container(
                                       alignment: Alignment.center,
