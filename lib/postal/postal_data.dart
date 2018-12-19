@@ -14,6 +14,8 @@ class PostalData {
   int get hashCode {
     return hash2(this.postalCode,1);
   }
+}
 
-
+class EmptyPostalData extends PostalData {
+  EmptyPostalData() : super("");
 }
