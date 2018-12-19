@@ -8,6 +8,7 @@ import 'package:rxdart/rxdart.dart';
 class ContactBloc {
   // Inputs
   Sink<PostalData> setPostal;
+  Sink<void> reset;
 
   // Outputs
   Stream<ContactData> contactData;
@@ -19,12 +20,16 @@ class ContactBloc {
         sync: true, seedValue: new ContactData([]));
 
     final setPostalController = StreamController<PostalData>(sync: true);
+    final resetController = StreamController<void>(sync: true);
 
     final subscriptions = <StreamSubscription<dynamic>>[
       setPostalController.stream.listen((postalData) {
         repository
             .getContactData(postalData)
             .then(contactDataController.sink.add);
+      }),
+      resetController.stream.listen((_) {
+        setPostalController.sink.add(new EmptyPostalData());
       })
     ];
 

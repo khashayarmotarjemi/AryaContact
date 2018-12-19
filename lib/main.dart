@@ -32,8 +32,8 @@ void main() {
             ])));
   });
 
-  when(mockRepo.getContactData(new PostalData("0"))).thenAnswer((_) {
-    return Future.value(new ContactData([]));
+  when(mockRepo.getContactData(new EmptyPostalData())).thenAnswer((_) {
+    return Future.value(new EmptyContactData());
   });
 
   var bloc = new ContactBloc(mockRepo);

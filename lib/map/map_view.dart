@@ -90,7 +90,7 @@ class MapView extends StatelessWidget {
                                           iconSize: 78,
                                           onPressed: () {
                                             bloc.viewPoint.first.then((latLng) {
-                                              bloc.setMarker.add(latLng);
+                                              bloc.setLocation.add(latLng);
                                               bloc.setShowCenterPointer
                                                   .add(false);
                                               ContactsBlocProvider.of(context)
@@ -117,7 +117,7 @@ class MapView extends StatelessWidget {
 
   static Stream<MergedMapData> mergeMapData(MapBloc bloc) {
     return Observable.combineLatest3(
-        bloc.markerLocation,
+        bloc.location,
         bloc.clickable,
         bloc.viewPoint,
         (markerLoc, clickable, viewPoint) =>

@@ -16,12 +16,18 @@ class ContactData {
   }
 }
 
+class EmptyContactData extends ContactData {
+  EmptyContactData() : super([]);
+}
+
 class Contact {
   final String phoneNumber;
   final String name;
   final String imgUrl;
 
-  Contact(this.phoneNumber, this.name, {this.imgUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-EN2wkpax0yP9U26S5wG2GgqEEspDujX-939pT_B3JJUamwQA"});
+  Contact(this.phoneNumber, this.name,
+      {this.imgUrl =
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-EN2wkpax0yP9U26S5wG2GgqEEspDujX-939pT_B3JJUamwQA"});
 
   @override
   int get hashCode {

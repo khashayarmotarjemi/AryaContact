@@ -27,13 +27,13 @@ void main() {
     });
 
     test("marker test", () {
-      bloc.markerLocation.listen((loc) {
+      bloc.location.listen((loc) {
         print(loc);
       });
 
-      bloc.setMarker.add(LatLng(60, 70));
-      bloc.setMarker.add(LatLng(65, 75));
-      bloc.unsetMarker.add(LatLng);
+      bloc.setLocation.add(LatLng(60, 70));
+      bloc.setLocation.add(LatLng(65, 75));
+      bloc.unsetLocation.add(LatLng);
     });
 
     test("Merged map data test", () {

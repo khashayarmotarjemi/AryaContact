@@ -37,11 +37,7 @@ class HomeScreenState extends State<HomeScreen> {
       ContactBloc contactBloc) {
     if (mapSnapshot.data != null &&
         mapSnapshot.data.marker != UnassignedLocation()) {
-      mapBloc.setShowCenterPointer.add(false);
-      mapBloc.setClickable.add(false);
-      mapBloc.markerLocation.first.then((location) {
-        print(location.toString());
-      });
+
     }
   }
 
@@ -56,7 +52,6 @@ class HomeScreenState extends State<HomeScreen> {
           return StreamBuilder<MergedMapData>(
               stream: MapView.mergeMapData(mapBloc),
               builder: (context, mapSnapshot) {
-                setUp(mapSnapshot, contactSnapshot, mapBloc, contactsBloc);
                 return Scaffold(
                   appBar: AppBar(
                     title: Text("نقشه"),
@@ -104,7 +99,8 @@ class HomeScreenState extends State<HomeScreen> {
                                     height: 59,
                                     child: FlatButton(
                                         onPressed: () {
-                                          resetBlocs(mapBloc, contactsBloc);
+                                          mapBloc.reset.add(null);
+                                          contactsBloc.reset.add(null);
                                         },
                                         child: Card(
                                           elevation: 6,
@@ -147,7 +143,7 @@ class HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   floatingActionButton: mapSnapshot.hasData &&
-                          contactSnapshot.data.contacts == ContactData([])
+                          contactSnapshot.data.contacts == EmptyContactData()
                       ? FloatingActionButton(
                           onPressed: () async {
                             var currentLocation = <String, double>{};
@@ -171,7 +167,6 @@ class HomeScreenState extends State<HomeScreen> {
   void resetBlocs(MapBloc mapBloc, ContactBloc contactBloc) {
     mapBloc.setClickable.add(true);
     mapBloc.setShowCenterPointer.add(true);
-    mapBloc.unsetMarker.add(UnassignedLocation());
-    contactBloc.setPostal.add(new PostalData("0"));
+    mapBloc.unsetLocation.add(UnassignedLocation());
   }
 }
