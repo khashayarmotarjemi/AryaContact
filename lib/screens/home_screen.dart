@@ -30,7 +30,7 @@ class HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  void setUp(
+  /*void setUp(
       AsyncSnapshot<MergedMapData> mapSnapshot,
       AsyncSnapshot<ContactData> contactSnapshot,
       MapBloc mapBloc,
@@ -39,7 +39,7 @@ class HomeScreenState extends State<HomeScreen> {
         mapSnapshot.data.marker != UnassignedLocation()) {
 
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -162,11 +162,5 @@ class HomeScreenState extends State<HomeScreen> {
                 );
               });
         });
-  }
-
-  void resetBlocs(MapBloc mapBloc, ContactBloc contactBloc) {
-    mapBloc.setClickable.add(true);
-    mapBloc.setShowCenterPointer.add(true);
-    mapBloc.unsetLocation.add(UnassignedLocation());
   }
 }

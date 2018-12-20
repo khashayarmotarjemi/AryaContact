@@ -33,11 +33,12 @@ class ContactBloc {
       })
     ];
 
-    return ContactBloc._(
-        contactDataController, setPostalController, subscriptions);
+    return ContactBloc._(contactDataController, setPostalController,
+        resetController, subscriptions);
   }
 
-  ContactBloc._(this.contactData, this.setPostal, this._subscriptions);
+  ContactBloc._(
+      this.contactData, this.setPostal, this.reset, this._subscriptions);
 
   void close() {
     setPostal.close();

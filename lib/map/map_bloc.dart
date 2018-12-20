@@ -12,6 +12,7 @@ class MapBloc {
   final Sink<bool> setClickable;
   final Sink<bool> setShowCenterPointer;
   final Sink<void> reset;
+  final Sink<double> setZoom;
 
   // outputs
   final Stream<LatLng> location;
@@ -19,6 +20,7 @@ class MapBloc {
   final Stream<LatLng> center;
   final Stream<bool> clickable;
   final Stream<bool> showCenterPointer;
+  final Stream<double> zoom;
 
   final List<StreamSubscription<dynamic>> _subscriptions;
 
@@ -30,6 +32,7 @@ class MapBloc {
     final setShowCenterPointerController = StreamController<bool>(sync: true);
     final setCenterController = StreamController<LatLng>(sync: true);
     final resetController = StreamController<void>(sync: true);
+    final setZoomController = StreamController<double>(sync: true);
 
     final locationController =
         BehaviorSubject<LatLng>(seedValue: UnassignedLocation());
@@ -41,7 +44,9 @@ class MapBloc {
         BehaviorSubject<bool>(seedValue: true, sync: true);
 
     final centerController =
-        BehaviorSubject<LatLng>(seedValue: LatLng(22, 22), sync: true);
+        BehaviorSubject<LatLng>(seedValue: UnassignedLocation(), sync: true);
+
+    final zoomController = BehaviorSubject<double>(seedValue: 13, sync: true);
 
     final subscriptions = <StreamSubscription<dynamic>>[
       setLocationController.stream.listen((location) {
@@ -65,7 +70,8 @@ class MapBloc {
         setClickableController.sink.add(true);
         setShowCenterPointerController.sink.add(true);
         unsetLocationController.sink.add(UnassignedLocation());
-      })
+      }),
+      setZoomController.stream.listen(zoomController.sink.add),
     ];
 
     return MapBloc._(
@@ -74,6 +80,7 @@ class MapBloc {
         setViewPointController,
         setClickableController,
         resetController,
+        setZoomController,
         locationController,
         viewPointController,
         clickableController,
@@ -81,6 +88,7 @@ class MapBloc {
         showCenterPointerController,
         setCenterController,
         centerController,
+        zoomController,
         subscriptions);
   }
 
@@ -90,6 +98,7 @@ class MapBloc {
       this.setViewPoint,
       this.setClickable,
       this.reset,
+      this.setZoom,
       this.location,
       this.viewPoint,
       this.clickable,
@@ -97,6 +106,7 @@ class MapBloc {
       this.showCenterPointer,
       this.setCenter,
       this.center,
+      this.zoom,
       this._subscriptions);
 
   void close() {
@@ -106,6 +116,7 @@ class MapBloc {
     setClickable.close();
     setShowCenterPointer.close();
     setCenter.close();
+    setZoom.close();
     _subscriptions.clear();
   }
 }

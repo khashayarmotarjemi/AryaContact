@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:latlong/latlong.dart';
 import 'package:arya_contact/postal/postal_data.dart';
 import 'package:arya_contact/postal/postal_repository.dart';
+import 'package:latlong/latlong.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PostalBloc {
@@ -15,14 +15,17 @@ class PostalBloc {
   final List<StreamSubscription<dynamic>> _subscriptions;
 
   factory PostalBloc(PostalRepository repository) {
-    final postalDataController = BehaviorSubject<PostalData>(seedValue: null);
+    final postalDataController =
+    BehaviorSubject<PostalData>(sync: true, seedValue: EmptyPostalData());
 
     final setLocationController = StreamController<LatLng>(sync: true);
 
     final subscriptions = <StreamSubscription<dynamic>>[
       setLocationController.stream.listen((location) {
-        Observable.fromFuture(repository.getPostalData(location))
-            .pipe(postalDataController);
+        repository.getPostalData(location).asStream().listen((postalData) {
+          print(postalData);
+          postalDataController.sink.add(postalData);
+        });
       })
     ];
 
@@ -37,4 +40,3 @@ class PostalBloc {
     _subscriptions.clear();
   }
 }
-

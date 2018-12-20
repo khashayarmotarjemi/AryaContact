@@ -20,6 +20,18 @@ void main() {
       bloc.contactData.listen((contact) {
         expect(contact.contacts[0], new Contact("1111", "khashayar"));
       });
+
+
+ /*     print("\n*********************\n");
+
+      postalBloc.postalData.listen(contactsBloc.setPostal.add);
+
+      postalBloc.setLocation.add(LatLng(32,32));
+
+      contactsBloc.contactData.listen((contactsData) {
+        print(contactsData.contacts.length);
+        print("\n*********************\n");
+      });*/
     });
   });
 }

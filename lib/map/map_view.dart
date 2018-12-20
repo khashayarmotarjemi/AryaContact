@@ -34,7 +34,7 @@ class MapView extends StatelessWidget {
                     bloc.setViewPoint.add(mapPosition.center);
                   },
                   center: snapshot.data.viewPoint,
-                  zoom: 12.0,
+                  zoom: snapshot.data.zoom,
                 ),
                 layers: [
                   new TileLayerOptions(
@@ -90,12 +90,7 @@ class MapView extends StatelessWidget {
                                           iconSize: 78,
                                           onPressed: () {
                                             bloc.viewPoint.first.then((latLng) {
-                                              bloc.setLocation.add(latLng);
-                                              bloc.setShowCenterPointer
-                                                  .add(false);
-                                              ContactsBlocProvider.of(context)
-                                                  .setPostal
-                                                  .add(PostalData("12"));
+                                              bloc.setLocation.add(LatLng(32, 32));
                                             });
                                           }),
                                     ),
@@ -116,12 +111,13 @@ class MapView extends StatelessWidget {
   }
 
   static Stream<MergedMapData> mergeMapData(MapBloc bloc) {
-    return Observable.combineLatest3(
+    return Observable.combineLatest4(
         bloc.location,
         bloc.clickable,
         bloc.viewPoint,
-        (markerLoc, clickable, viewPoint) =>
-            new MergedMapData(markerLoc, clickable, viewPoint));
+        bloc.zoom,
+        (markerLoc, clickable, viewPoint, zoom) =>
+            new MergedMapData(markerLoc, clickable, viewPoint,zoom));
   }
 }
 
@@ -129,6 +125,7 @@ class MergedMapData {
   final LatLng marker;
   final bool clickable;
   final LatLng viewPoint;
+  final double zoom;
 
-  MergedMapData(this.marker, this.clickable, this.viewPoint);
+  MergedMapData(this.marker, this.clickable, this.viewPoint, this.zoom);
 }
