@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:arya_contact/common/loading.dart';
 import 'package:arya_contact/contact/contact_bloc_provider.dart';
 import 'package:arya_contact/contact/contact_data.dart';
 import 'package:arya_contact/contact/widgets/contact_item.dart';
+import 'package:arya_contact/screens/home_screen.dart';
+import 'package:flutter/material.dart';
 
 class ContactList extends StatelessWidget {
   ContactList({Key key}) : super(key: key);
@@ -26,25 +27,12 @@ class ContactList extends StatelessWidget {
         return ContactItem(
           contact: contact,
           onTap: () {
-            /*Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) {
-                  return DetailScreen(
-                    todoId: contact.id,
-                    initBloc: () =>
-                        TodoBloc(Injector.of(context).todosInteractor),
-                  );
-                },
-              ),
-            ).then((todo) {
-              if (todo is Todo) {
-                _showUndoSnackbar(context, todo);
-              }
-            });*/
+            print("clicked");
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => ContactDetail(contact)));
           },
         );
       },
     );
   }
-
 }

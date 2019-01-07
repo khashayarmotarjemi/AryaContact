@@ -1,29 +1,26 @@
-import 'package:arya_contact/common/BlocProvider.dart';
+import 'package:arya_contact/address/address_search_bloc.dart';
 import 'package:arya_contact/contact/contact_bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
-/*
-class ContactsBlocProvider extends BlocProvider<ContactBloc> {}
-*/
-
-class ContactsBlocProvider extends StatefulWidget {
+class AddressSearchBlocProvider extends StatefulWidget {
   final Widget child;
-  final ContactBloc bloc;
+  final AddressSearchBloc bloc;
 
-  ContactsBlocProvider({Key key, @required this.child, @required this.bloc})
+  AddressSearchBlocProvider({Key key, @required this.child, @required this.bloc})
       : super(key: key);
 
   @override
-  _ContactsBlocProviderState createState() => _ContactsBlocProviderState();
+  _AddressSearchBlocProviderState createState() => _AddressSearchBlocProviderState();
 
   static ContactBloc of(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(_ContactBlocProvider)
-    as _ContactBlocProvider)
+            as _ContactBlocProvider)
         .bloc;
   }
 }
 
-class _ContactsBlocProviderState extends State<ContactsBlocProvider> {
+class _AddressSearchBlocProviderState extends State<AddressSearchBlocProvider> {
   @override
   Widget build(BuildContext context) {
     return _ContactBlocProvider(bloc: widget.bloc, child: widget.child);

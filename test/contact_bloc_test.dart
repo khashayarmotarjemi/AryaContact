@@ -33,5 +33,14 @@ void main() {
         print("\n*********************\n");
       });*/
     });
+
+
+    test("basasdasdfic contact get test", () {
+      AddressSearchRepository().getSearchLocations("سبزه میدان");
+
+    });
+
+
+
   });
 }
