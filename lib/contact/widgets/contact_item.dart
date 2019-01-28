@@ -33,17 +33,18 @@ class ContactItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Container(
+                            padding: EdgeInsets.only(right: 25),
                             alignment: Alignment.centerRight,
                             child: Text(
                               contact.name,
                               textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 24),
+                              style: TextStyle(fontSize: 20),
                             ),
                           ),
                           Container(
                             alignment: Alignment.centerRight,
-                            padding: EdgeInsets.only(top: 10),
-                            child: Text("توضیحات"),
+                            padding: EdgeInsets.only(top: 10,right: 25),
+                            child: Text("متن توضیحات ..."),
                           ),
                           Container(
                               padding: EdgeInsets.only(top: 13, left: 30),

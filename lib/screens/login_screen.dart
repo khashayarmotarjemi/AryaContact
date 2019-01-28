@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   LoginScreen() : super();
@@ -44,7 +45,7 @@ class LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.center,
                   child: new Text(
                     "ورود به سیستم",
-                    style: TextStyle(color: Colors.red,fontSize: 25),
+                    style: TextStyle(color: Colors.red, fontSize: 25),
                   ),
                 ),
               ),
@@ -81,9 +82,11 @@ class LoginScreenState extends State<LoginScreen> {
                         top: 26,
                       ),
                       child: TextField(
-                        onChanged: (text) {setState(() {
-                          smsCode = text;
-                        });},
+                        onChanged: (text) {
+                          setState(() {
+                            smsCode = text;
+                          });
+                        },
                         keyboardType: TextInputType.number,
                         textDirection: TextDirection.rtl,
                         textAlign: TextAlign.center,
@@ -100,77 +103,73 @@ class LoginScreenState extends State<LoginScreen> {
             ),
             !smsAvailable
                 ? new Container(
-                    width: 145,
-                    height: 70,
-                    padding: EdgeInsets.only(top: 10),
-                    child: Card(
-                        elevation: 10,
-                        child: Container(
-                          child: FlatButton(
-                              onPressed: () {
-                                if (username == "09359236524") {
-                                  Timer(Duration(seconds: 2), () {
-                                    setState(() {
-                                      smsAvailable = true;
-                                    });
-                                  });
-                                }
-                              },
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Container(
-                                    child: Text(
-                                      "دریافت کد",
-                                      textScaleFactor: 1.4,
-                                      style:
-                                          TextStyle(color: Colors.green[700]),
-                                    ),
-                                    padding: EdgeInsets.only(right: 20),
-                                  )
-                                ],
-                              )),
+              width: 145,
+              height: 70,
+              padding: EdgeInsets.only(top: 10),
+              child: Card(
+                  elevation: 10,
+                  child: Container(
+                    child: FlatButton(
+                        onPressed: () {
+                          setState(() {
+                            smsAvailable = true;
+                          });
+                        },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Container(
+                              child: Text(
+                                "دریافت کد",
+                                textScaleFactor: 1.4,
+                                style:
+                                TextStyle(color: Colors.green[700]),
+                              ),
+                              padding: EdgeInsets.only(right: 20),
+                            )
+                          ],
                         )),
-                  )
+                  )),
+            )
                 : new Container(
-                    width: 145,
-                    height: 70,
-                    padding: EdgeInsets.only(top: 10),
-                    child: Card(
-                        elevation: 10,
-                        child: Container(
-                          child: FlatButton(
-                              onPressed: () {
-                                if (smsCode == "1111") {
-                                  Timer(Duration(seconds: 1), () {
-                                    setState(() {
-                                      Navigator.pushReplacementNamed(context, '/map');
-                                    });
-                                  });
-                                }
-                              },
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Container(
-                                    child: Text(
-                                      "ورود",
-                                      textScaleFactor: 1.4,
-                                      style:
-                                          TextStyle(color: Colors.green[700]),
-                                    ),
-                                    padding: EdgeInsets.only(right: 20),
-                                  ),
-                                  Icon(
-                                    Icons.chevron_right,
-                                    color: Colors.green[700],
-                                  )
-                                ],
-                              )),
+              width: 145,
+              height: 70,
+              padding: EdgeInsets.only(top: 10),
+              child: Card(
+                  elevation: 10,
+                  child: Container(
+                    child: FlatButton(
+                        onPressed: () {
+                          if (smsCode == "1111") {
+                            Timer(Duration(seconds: 1), () {
+                              setState(() {
+                                Navigator.pushReplacementNamed(context, '/map');
+                              });
+                            });
+                          }
+                        },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Container(
+                              child: Text(
+                                "ورود",
+                                textScaleFactor: 1.4,
+                                style:
+                                TextStyle(color: Colors.green[700]),
+                              ),
+                              padding: EdgeInsets.only(right: 20),
+                            ),
+                            Icon(
+                              Icons.chevron_right,
+                              color: Colors.green[700],
+                            )
+                          ],
                         )),
-                  ),
+                  )),
+            ),
             new Container(
               padding: EdgeInsets.only(top: 60),
               child: new Row(

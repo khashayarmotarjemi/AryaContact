@@ -70,7 +70,7 @@ class MapView extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     Container(
-                                      width: 70,
+                                      width: 78,
                                       height: 35,
                                       child: new Card(
                                         color: Colors.red,

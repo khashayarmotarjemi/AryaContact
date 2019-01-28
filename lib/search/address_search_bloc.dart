@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:arya_contact/address/address_search_repository.dart';
+import 'package:arya_contact/search/address_search_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AddressSearchBloc {

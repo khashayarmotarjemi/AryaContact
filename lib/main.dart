@@ -11,6 +11,7 @@ import 'package:arya_contact/postal/postal_data.dart';
 import 'package:arya_contact/postal/postal_repository.dart';
 import 'package:arya_contact/screens/home_screen.dart';
 import 'package:arya_contact/screens/login_screen.dart';
+import 'package:arya_contact/search/address_search_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong/latlong.dart';
 import 'package:mockito/mockito.dart';
@@ -20,16 +21,16 @@ class MockContactRepo extends Mock implements ContactRepository {}
 class MockPostalRepo extends Mock implements PostalRepository {}
 
 void main() {
-
-  AddressSearchRepository().getSearchLocations("سبزه میدان").then((l) => print(l[3].name));
-
+  AddressSearchRepository()
+      .getSearchLocations("سبزه میدان")
+      .then((l) => print(l[3].name));
 
   // mocks
   MockContactRepo mockContactRepo = new MockContactRepo();
   MockPostalRepo mockPostalRepo = new MockPostalRepo();
   when(mockContactRepo.getContactData(new PostalData("12"))).thenAnswer((_) {
     return Future.delayed(
-        Duration(seconds: 3),
+        Duration(seconds: 2),
         () => Future.value(ContactData([
               new Contact("+24 3345 8561", "فروشگاه اول"),
               new Contact("+24 3345 8561", "فروشگاه دوم"),
@@ -56,10 +57,8 @@ void main() {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-
   // main
   WebPostalRepository postalRepo = WebPostalRepository();
-
 
   // bloc wiring
   var mapBloc = new MapBloc(new LatLng(36.683, 48.50));
@@ -68,7 +67,6 @@ void main() {
 
   mapBloc.location.listen(postalBloc.setLocation.add);
   postalBloc.postalData.listen(contactsBloc.setPostal.add);
-
 
   // app
   runApp(MapBlocProvider(
@@ -82,7 +80,7 @@ void main() {
             primaryColor: Colors.red[400],
             accentColor: Colors.redAccent,
 
-            fontFamily: 'Shabnam',
+//            fontFamily: 'Shabnam',
 
             textTheme: TextTheme(
               headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
@@ -91,11 +89,9 @@ void main() {
             ),
           ),
           routes: {
-           '/': (context) => LoginScreen(),
-            '/map': (context) => HomeScreen()
-/*
+//                '/': (context) => LoginScreen(),
+            '/map': (context) => HomeScreen(),
             '/': (context) => HomeScreen()
-*/
           }),
     ),
   ));
