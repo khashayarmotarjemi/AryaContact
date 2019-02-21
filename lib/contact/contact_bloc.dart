@@ -30,6 +30,7 @@ class ContactBloc {
       }),
       resetController.stream.listen((_) {
         setPostalController.sink.add(new EmptyPostalData());
+        contactDataController.sink.add(EmptyContactData());
       })
     ];
 

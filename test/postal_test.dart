@@ -1,3 +1,4 @@
+import 'package:arya_contact/contact/contact_data.dart';
 import 'package:arya_contact/postal/postal_bloc.dart';
 import 'package:arya_contact/postal/postal_data.dart';
 import 'package:arya_contact/postal/postal_repository.dart';
@@ -21,7 +22,6 @@ void main() {
 
     http.read(url).then(print);
 
-
     test("simple get test", () {
       repo.getPostalData(LatLng(1, 1)).then((p) => p.postalCode).then(print);
     });
@@ -40,5 +40,34 @@ void main() {
         expect(postal.postalCode, "1111");
       });
     });
+  });
+
+  group("test", () {
+    var contacts = [
+      new Contact("+24 3345 8561", "فروشگاه اول", 1),
+      new Contact("+24 3345 8561", "فروشگاه دوم", 1),
+      new Contact("+24 3345 8561", "فروشگاه سوم", 2),
+      new Contact("+24 3345 8561", "فروشگاه چهارم", 3),
+      new Contact("+24 3345 8561", "فروشگاه اول", 5),
+      new Contact("+24 3345 8561", "فروشگاه اول", 3),
+      new Contact("+24 3345 8561", "فروشگاه اول", 2),
+      new Contact("+24 3345 8561", "فروشگاه اول", 4)
+    ];
+
+    Map<int, int> getCategoryCountMap(List<Contact> contacts) {
+      var map = new Map<int, int>();
+      contacts.forEach((contact) {
+        int currentCount =
+            map.containsKey(contact.categoryId) ? map[contact.categoryId] : 0;
+        print("current count: $currentCount");
+        currentCount == 0
+            ? map.putIfAbsent(contact.categoryId, () => 1)
+            : map.update(contact.categoryId, (prv) => prv + 1);
+      });
+
+      return map;
+    }
+
+    print(getCategoryCountMap(contacts));
   });
 }

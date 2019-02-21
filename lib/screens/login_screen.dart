@@ -1,7 +1,14 @@
+/*
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:ride/common/bloc_provider.dart';
+import 'package:ride/home/home_screen.dart';
+import 'package:ride/home/passenger_home.dart';
+import 'package:ride/rides/models/user_entity.dart';
+import 'package:ride/user/user_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen() : super();
@@ -13,8 +20,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  String username = "";
+  String phone = "";
   String smsCode = "";
+  String generatedCode = "";
   bool smsAvailable = false;
 
   @override
@@ -30,8 +38,9 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Container(
-          color: Colors.redAccent,
+          color: Colors.blueAccent,
           alignment: Alignment.center,
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
               Widget>[
@@ -45,7 +54,7 @@ class LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.center,
                   child: new Text(
                     "ورود به سیستم",
-                    style: TextStyle(color: Colors.red, fontSize: 25),
+                    style: TextStyle(color: Colors.blue, fontSize: 25),
                   ),
                 ),
               ),
@@ -62,7 +71,7 @@ class LoginScreenState extends State<LoginScreen> {
                       child: TextField(
                         onChanged: (text) {
                           setState(() {
-                            username = text;
+                            phone = text;
                             print(text);
                           });
                         },
@@ -103,73 +112,80 @@ class LoginScreenState extends State<LoginScreen> {
             ),
             !smsAvailable
                 ? new Container(
-              width: 145,
-              height: 70,
-              padding: EdgeInsets.only(top: 10),
-              child: Card(
-                  elevation: 10,
-                  child: Container(
-                    child: FlatButton(
-                        onPressed: () {
-                          setState(() {
-                            smsAvailable = true;
-                          });
-                        },
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Container(
-                              child: Text(
-                                "دریافت کد",
-                                textScaleFactor: 1.4,
-                                style:
-                                TextStyle(color: Colors.green[700]),
-                              ),
-                              padding: EdgeInsets.only(right: 20),
-                            )
-                          ],
+                    width: 145,
+                    height: 70,
+                    padding: EdgeInsets.only(top: 10),
+                    child: Card(
+                        elevation: 10,
+                        child: Container(
+                          child: FlatButton(
+                              onPressed: () {
+                                generatedCode = "1111";
+
+                                setState(() {
+                                  smsAvailable = true;
+                                });
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Container(
+                                    child: Text(
+                                      "دریافت کد",
+                                      textScaleFactor: 1.4,
+                                      style:
+                                          TextStyle(color: Colors.green[700]),
+                                    ),
+                                    padding: EdgeInsets.only(right: 20),
+                                  )
+                                ],
+                              )),
                         )),
-                  )),
-            )
+                  )
                 : new Container(
-              width: 145,
-              height: 70,
-              padding: EdgeInsets.only(top: 10),
-              child: Card(
-                  elevation: 10,
-                  child: Container(
-                    child: FlatButton(
-                        onPressed: () {
-                          if (smsCode == "1111") {
-                            Timer(Duration(seconds: 1), () {
-                              setState(() {
-                                Navigator.pushReplacementNamed(context, '/map');
-                              });
-                            });
-                          }
-                        },
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Container(
-                              child: Text(
-                                "ورود",
-                                textScaleFactor: 1.4,
-                                style:
-                                TextStyle(color: Colors.green[700]),
-                              ),
-                              padding: EdgeInsets.only(right: 20),
-                            ),
-                            Icon(
-                              Icons.chevron_right,
-                              color: Colors.green[700],
-                            )
-                          ],
+                    width: 145,
+                    height: 70,
+                    padding: EdgeInsets.only(top: 10),
+                    child: Card(
+                        elevation: 10,
+                        child: Container(
+                          child: FlatButton(
+                              onPressed: () {
+                                if (smsCode == generatedCode) {
+                                  Timer(Duration(seconds: 1), () {
+                                    BlocProvider.of<UserBloc>(context)
+                                        .logUserIn
+                                        .add(Passenger("khashayar motarjemi",
+                                            phone, Sex.MALE, 20));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
+                                  });
+                                }
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Container(
+                                    child: Text(
+                                      "ورود",
+                                      textScaleFactor: 1.4,
+                                      style:
+                                          TextStyle(color: Colors.green[700]),
+                                    ),
+                                    padding: EdgeInsets.only(right: 20),
+                                  ),
+                                  Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.green[700],
+                                  )
+                                ],
+                              )),
                         )),
-                  )),
-            ),
+                  ),
             new Container(
               padding: EdgeInsets.only(top: 60),
               child: new Row(
@@ -180,15 +196,15 @@ class LoginScreenState extends State<LoginScreen> {
                     child: Icon(
                       Icons.pin_drop,
                       size: 80,
-                      color: Colors.red[900],
+                      color: Colors.blue[900],
                     ),
                   ),
                   Container(
                       padding: EdgeInsets.only(right: 30, left: 30),
                       child: Icon(Icons.arrow_forward,
-                          size: 50, color: Colors.red[900])),
+                          size: 50, color: Colors.blue[900])),
                   Container(
-                    child: Icon(Icons.phone, size: 80, color: Colors.red[900]),
+                    child: Icon(Icons.directions_car, size: 80, color: Colors.blue[900]),
                   )
                 ],
               ),
@@ -197,3 +213,4 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+*/

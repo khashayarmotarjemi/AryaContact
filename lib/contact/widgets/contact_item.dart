@@ -1,6 +1,7 @@
 import 'package:arya_contact/contact/contact_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactItem extends StatelessWidget {
   final GestureTapCallback onTap;
@@ -13,10 +14,11 @@ class ContactItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-        onPressed: onTap,
-        child: new Container(
+    return GestureDetector(
+        onTap: onTap,
+        child: new SizedBox(
           height: 150,
+          width: double.infinity,
           child: new Card(
               elevation: 4,
               child: Container(
@@ -24,7 +26,11 @@ class ContactItem extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       height: 100,
-                      child: Image.network(contact.imgUrl),
+                      child: Image.network(
+                        contact.imgUrl,
+                        width: 100,
+                        height: 100,
+                      ),
                     ),
                     Container(
                       width: 230,
@@ -43,7 +49,7 @@ class ContactItem extends StatelessWidget {
                           ),
                           Container(
                             alignment: Alignment.centerRight,
-                            padding: EdgeInsets.only(top: 10,right: 25),
+                            padding: EdgeInsets.only(top: 10, right: 25),
                             child: Text("متن توضیحات ..."),
                           ),
                           Container(
@@ -55,13 +61,19 @@ class ContactItem extends StatelessWidget {
                                   elevation: 6,
                                   child: Row(
                                     children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.only(
-                                            right: 10, left: 10),
-                                        child: Icon(
-                                          Icons.phone,
-                                          color: Colors.green,
+                                      GestureDetector(
+                                        child: Container(
+                                          padding: EdgeInsets.only(
+                                              right: 10, left: 10),
+                                          child: Icon(
+                                            Icons.phone,
+                                            color: Colors.green,
+                                          ),
                                         ),
+                                        onTap: () {
+                                          launch("tel://${contact.phoneNumber}");
+                                          print("phone clicked");
+                                        },
                                       ),
                                       Container(
                                         width: 1,
@@ -70,7 +82,7 @@ class ContactItem extends StatelessWidget {
                                       ),
                                       Container(
                                         padding:
-                                            EdgeInsets.only(left: 10, right: 4),
+                                        EdgeInsets.only(left: 10, right: 4),
                                         child: Text(
                                           contact.phoneNumber,
                                           style: TextStyle(

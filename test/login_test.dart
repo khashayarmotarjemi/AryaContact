@@ -1,17 +1,9 @@
 import 'package:test_api/test_api.dart';
 import 'package:http/http.dart' as http;
+import 'dart:math';
 
 void main() {
-/*  group("sms", () {
-
-    Map<String,String> paramMap = {
-      'Username'"":,
-    'Password':
-    };
-
-    http.post("", body:)
-
-
-
-  });*/
+  group("sms", () {
+    print(Random().nextInt(9999));
+  });
 }

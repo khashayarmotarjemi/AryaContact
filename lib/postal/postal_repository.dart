@@ -11,10 +11,12 @@ abstract class PostalRepository {
 class WebPostalRepository extends PostalRepository {
   @override
   Future<PostalData> getPostalData(LatLng location) {
-    var url = "http://198.143.180.206:8080/postal";
+    /* var url = "http://198.143.180.206:8080/postal";
     return http
         .get(url)
         .then((r) => jsonDecode(r.body)['code'])
-        .then((c) => PostalData(c));
+        .then((c) => PostalData(c));*/
+
+    return Future.value(PostalData("12"));
   }
 }

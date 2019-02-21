@@ -16,8 +16,7 @@ class AddressSearchBlocProvider extends StatefulWidget {
 
   static AddressSearchBloc of(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(_AddressSearchBlocProvider)
-            as _AddressSearchBlocProvider)
-        .bloc;
+            as _AddressSearchBlocProvider).bloc;
   }
 }
 

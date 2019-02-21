@@ -1,3 +1,4 @@
+import 'package:arya_contact/search/address_search_bloc.dart';
 import 'package:arya_contact/search/address_search_repository.dart';
 import 'package:latlong/latlong.dart';
 import 'package:mockito/mockito.dart';
@@ -11,9 +12,14 @@ void main() {
 
       test("get simple address search", () {
       when(repo.getSearchLocations("darvaze arg")).thenAnswer(
-              (_) => Future.value([SearchLocation(LatLng(12,12),"aaaa"),
-              SearchLocation(LatLng(12,12),"aaaa"),
-              SearchLocation(LatLng(12,12),"aaaa")]));
+              (_) => Future.value([SearchResult(LatLng(12,12),"aaaa"),
+              SearchResult(LatLng(12,12),"aaaa"),
+              SearchResult(LatLng(12,12),"aaaa")]));
       });
+
+
+      var bloc = AddressSearchBloc(repo);
+
+      bloc.latestSelected.listen((sr) => prints("CLICKED " + sr.toString() ));
   });
 }

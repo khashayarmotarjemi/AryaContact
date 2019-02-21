@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:latlong/latlong.dart';
+import 'package:quiver/core.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MapBloc {
@@ -22,6 +23,9 @@ class MapBloc {
   final Stream<bool> showCenterPointer;
   final Stream<double> zoom;
 
+  //
+  LatLng mapCenter = UnassignedLocation();
+
   final List<StreamSubscription<dynamic>> _subscriptions;
 
   factory MapBloc(LatLng initViewpoint) {
@@ -34,10 +38,9 @@ class MapBloc {
     final resetController = StreamController<void>(sync: true);
     final setZoomController = StreamController<double>(sync: true);
 
-    final locationController =
-        BehaviorSubject<LatLng>(seedValue: UnassignedLocation());
+    final locationController = BehaviorSubject<LatLng>(sync: true);
     final viewPointController =
-        BehaviorSubject<LatLng>(seedValue: initViewpoint);
+        BehaviorSubject<LatLng>(seedValue: initViewpoint, sync: true);
     final clickableController =
         BehaviorSubject<bool>(seedValue: true, sync: true);
     final showCenterPointerController =
@@ -82,7 +85,7 @@ class MapBloc {
         resetController,
         setZoomController,
         locationController,
-        viewPointController,
+        viewPointController.stream,
         clickableController,
         setShowCenterPointerController,
         showCenterPointerController,
@@ -128,4 +131,11 @@ class UnassignedLocation extends LatLng {
   bool operator ==(final Object other) {
     return other is UnassignedLocation;
   }
+
+  @override
+  int get hashCode {
+    return hash2(LatLng(1,1),1);
+  }
+
+
 }

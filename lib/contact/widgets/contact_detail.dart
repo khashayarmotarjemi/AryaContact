@@ -1,5 +1,6 @@
 import 'package:arya_contact/contact/contact_data.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactDetail extends StatelessWidget {
   final Contact contact;
@@ -60,13 +61,17 @@ class ContactDetail extends StatelessWidget {
                                     elevation: 6,
                                     child: new Row(
                                       children: <Widget>[
-                                        Container(
-                                          padding: EdgeInsets.only(
-                                              right: 10, left: 10),
-                                          child: Icon(
-                                            Icons.phone,
-                                            color: Colors.green,
+                                        GestureDetector(
+                                          child: Container(
+                                            padding: EdgeInsets.only(
+                                                right: 10, left: 10),
+                                            child: Icon(
+                                              Icons.phone,
+                                              color: Colors.green,
+                                            ),
                                           ),
+                                          onTap: () => launch(
+                                              "tel://${contact.phoneNumber}"),
                                         ),
                                         Container(
                                           width: 1,

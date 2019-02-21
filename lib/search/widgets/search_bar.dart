@@ -1,12 +1,11 @@
+import 'package:arya_contact/search/address_search_bloc_provider.dart';
 import 'package:flutter/material.dart';
 
 class SearchBar extends StatefulWidget {
-  final ValueChanged<String> onChanged;
-
   @override
   _SearchBarState createState() => _SearchBarState();
 
-  SearchBar({@required this.onChanged});
+  SearchBar();
 }
 
 class _SearchBarState extends State<SearchBar> {
@@ -19,6 +18,8 @@ class _SearchBarState extends State<SearchBar> {
   void initState() {
     super.initState();
     textFocusNode = FocusNode();
+
+    // for initialising after changing focus
   }
 
   @override
@@ -32,7 +33,14 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    var addressSearchBloc = AddressSearchBlocProvider.of(context);
     // search
+
+    textFocusNode.addListener(() {
+      addressSearchBloc.search.add(textController.text);
+      print("focused  ${textController.text.toString()} ");
+    });
+
     return SizedBox(
         width: double.infinity,
         height: 78,
@@ -47,9 +55,11 @@ class _SearchBarState extends State<SearchBar> {
                   setState(() {
                     if (typingMode) {
                       textController.text = "";
+                      addressSearchBloc.setResultVisibility.add(false);
                       FocusScope.of(context).requestFocus(FocusNode());
                       typingMode = false;
                     } else {
+                      addressSearchBloc.setResultVisibility.add(true);
                       FocusScope.of(context).requestFocus(textFocusNode);
                       typingMode = true;
                     }
@@ -62,18 +72,22 @@ class _SearchBarState extends State<SearchBar> {
                 label: Container(),
               ),
               Container(
-                  width: 100,
+                  width: 200,
                   height: 52,
                   child: TextField(
                       focusNode: textFocusNode,
                       controller: textController,
-                      onChanged: widget.onChanged,
+                      onChanged: addressSearchBloc.search.add,
+                      textAlign: TextAlign.right,
                       textDirection: TextDirection.rtl,
                       decoration: InputDecoration(
-                          hintText: "جستجوی آدرس", border: InputBorder.none),
+                        hintText: "جستجوی آدرس",
+                        border: InputBorder.none,
+                      ),
                       onTap: () {
                         setState(() {
                           typingMode = true;
+                          addressSearchBloc.setResultVisibility.add(true);
                         });
                       }))
             ],

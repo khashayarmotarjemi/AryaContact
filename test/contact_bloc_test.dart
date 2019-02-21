@@ -12,18 +12,17 @@ void main() {
   group('contact bloc', () {
     MockContactRepo mockRepo = new MockContactRepo();
     when(mockRepo.getContactData(new PostalData("12"))).thenAnswer(
-        (_) => Future.value(ContactData([new Contact("1111", "khashayar")])));
+        (_) => Future.value(ContactData([new Contact("1111", "khashayar",1)])));
 
     ContactBloc bloc = new ContactBloc(mockRepo);
 
     test("basic contact get test", () {
       bloc.setPostal.add(new PostalData("12"));
       bloc.contactData.listen((contact) {
-        expect(contact.contacts[0], new Contact("1111", "khashayar"));
+        expect(contact.contacts[0], new Contact("1111", "khashayar",1));
       });
 
-
- /*     print("\n*********************\n");
+      /*     print("\n*********************\n");
 
       postalBloc.postalData.listen(contactsBloc.setPostal.add);
 
@@ -34,14 +33,5 @@ void main() {
         print("\n*********************\n");
       });*/
     });
-
-
-    test("basasdasdfic contact get test", () {
-      AddressSearchRepository().getSearchLocations("سبزه میدان");
-
-    });
-
-
-
   });
 }
